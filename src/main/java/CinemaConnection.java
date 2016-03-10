@@ -3,10 +3,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
-public class DB {
-    public static void createDB(Connection c) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:derby:CinemaDB;create=true");
+public class CinemaConnection {
+    private static void createDB(Connection c) throws SQLException {
         PreparedStatement tableHalls = c.prepareStatement(
                 "CREATE TABLE HALLS(" +
                         "NUM INT NOT NULL," +
@@ -32,7 +30,7 @@ public class DB {
                         "ROW INT NOT NULL," +
                         "SEAT INT NOT NULL," +
                         "FOREIGN KEY (SEANCE)" +
-                        "   REFERENCES SEANCES(ID))"
+                        "   REFERENCES SEANCES(ID))" // todo: add DATEFROM
         );
         tableReservations.execute();
         PreparedStatement tableRows = c.prepareStatement(
@@ -43,5 +41,18 @@ public class DB {
         );
         tableRows.execute();
     }
-}
 
+
+
+    public Connection getConnection() throws SQLException {
+        Connection c;
+        try {
+            return DriverManager.getConnection("jdbc:derby:CinemaDB;create=true");
+        } catch (SQLException e) {
+             c = DriverManager.getConnection("jdbc:derby:CinemaDB;create=true");
+        }
+        createDB(c);
+        return c;
+    }
+
+}

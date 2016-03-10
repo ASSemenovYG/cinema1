@@ -4,12 +4,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
-public class cinema {
+public class cinema  {
 
+
+    private static Connection newDB;
 
     public static void main(String args[]) throws SQLException {
-    DB cinema = new DB();
-        DB.createDB();
+    createDB(newDB);
 
     }
 }
