@@ -48,27 +48,35 @@ public class CinemaModel {
 
     public List<Seances> findSeance(Seances seances) throws SQLException {
         Connection c = DConnection.getConnection();
-        PreparedStatement findSeance = c.prepareStatement();
+
         List<Seances> list = new ArrayList<Seances>();
         StringBuilder query = new StringBuilder();
+
         query.append("SELECT ID, STIME, AGE, PRICE, FILM, HALL FROM SEANCES WHERE 1=1 ");
         if (seances.STIME != null){
             query.append(" AND STIME >= ?");
         }
-        if (seances.AGE != null){
-            query.append(" AND AGE >= ?");
-        }
-        if (seances.PRICE != null){
-            query.append(" AND PRICE >= ?");
-        }
+
+        query.append(" AND AGE >= ?");
+
+
+        query.append(" AND PRICE >= ?");
+
         if (seances.FILM != null){
-            query.append(" AND UPPER (FILM) LIKE '%" + film + "%' ");
-        }
-        if (hall != null){
-            query.append(" AND HALL = ?");
+            query.append(" AND UPPER (FILM) LIKE '%").append(seances.FILM).append("%' ");
         }
 
+        query.append(" AND HALL = ?");
+
+
         int row = 1;
+        PreparedStatement findSeance = c.prepareStatement(String.valueOf(query));
+        findSeance.setTimestamp(++row, Seances.STIME);
+        ResultSet resultSet = findSeance.executeQuery();
+        while (resultSet.next()){
+            list.add(new Seances(resultSet.getInt(1)));
+        }
+
 
 
     }
