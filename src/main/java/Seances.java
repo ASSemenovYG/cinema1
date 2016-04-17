@@ -1,17 +1,20 @@
-public class Seances {
-    public final int ID;
-    public final String FILM;
-    public final String STIME;
-    public final int HALL;
-    public final int PRICE;
-    public final int AGE;
+import java.sql.Date;
 
-    public Seances(int ID, String FILM, String STIME, int HALL, int PRICE, int AGE) {
-        this.ID = ID;
-        this.FILM = FILM;
-        this.STIME = STIME;
-        this.HALL = HALL;
-        this.PRICE = PRICE;
-        this.AGE = AGE;
+public class Seances {
+    public final int id;
+    public final String filmName;
+    public final java.sql.Date time;
+    public final int hall;
+    public final int price;
+    public final int age;
+
+
+    public Seances(int id, String filmName, Date time, int hall, int price, int age) {
+        this.id = id;
+        this.filmName = filmName;
+        this.time = time;
+        this.hall = hall;
+        this.price = price;
+        this.age = age;
     }
 }
